@@ -39,7 +39,7 @@ userSchema
       this.dashed_password = this.encryptPassword(password);
    })
    .get(function () {
-       console.log('USERSC GET THIS._PASS: ',this._password)
+      console.log("USERSC GET THIS._PASS: ", this._password);
       return this._password;
    });
 
@@ -59,3 +59,6 @@ userSchema.methods = {
       }
    },
 };
+
+//exports user schema
+module.exports = mongoose.model("User", userSchema);
