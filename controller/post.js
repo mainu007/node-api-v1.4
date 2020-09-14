@@ -1,12 +1,14 @@
 const Post = require("../models/post");
 
 exports.getPosts = (req, res) => {
-   res.json({
-      posts: [
-         { title: "Hello node js", body: "Body from node js" },
-         { title: "Good Morning", body: "Body from Good morning" },
-      ],
-   });
+   Post.find()
+      .select("_id title body")
+      .then((posts) => {
+         res.json(posts);
+      })
+      .catch((err) => {
+         res.status(400).json({ error: err });
+      });
 };
 
 //create post
