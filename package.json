@@ -1,0 +1,20 @@
+{
+   "name": "api-v1.4",
+   "version": "1.0.0",
+   "description": "node js api practice",
+   "main": "app.js",
+   "scripts": {
+      "dev": "nodemon app.js"
+   },
+   "keywords": [
+      "node",
+      "api"
+   ],
+   "author": "Mainu",
+   "license": "ISC",
+   "dependencies": {
+      "express": "^4.17.1",
+      "morgan": "^1.10.0",
+      "nodemon": "^2.0.4"
+   }
+}
