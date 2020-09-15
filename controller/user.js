@@ -43,6 +43,22 @@ exports.updateUser = (req, res) => {
    });
 };
 
+//deleted user
+exports.deleteUser = (req, res) => {
+   const user = req.profile;
+   user.remove((err) => {
+      if (err) {
+         res.status(401).json({ error: err });
+      }
+      user.salt = undefined;
+      user.dashed_password = undefined;
+      res.json({
+         message: "User deleted successfully.",
+         user,
+      });
+   });
+};
+
 //create req.profile method
 exports.userById = (req, res, next, id) => {
    User.findById(id).exec((err, user) => {
