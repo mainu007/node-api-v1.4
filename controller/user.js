@@ -16,14 +16,9 @@ exports.allUsers = (req, res) => {
 
 //show single user
 exports.getUser = (req, res) => {
-   User.findOne({ email: req.profile.email }, (err, user) => {
-      if (err || !user) {
-         return res.status(401).json({
-            error: err,
-         });
-      }
-      res.json(user);
-   }).select("_id name email");
+   req.profile.salt = undefined;
+   req.profile.dashed_password = undefined;
+   return res.json(req.profile);
 };
 
 //create req.profile method
