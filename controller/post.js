@@ -1,11 +1,11 @@
 const Post = require("../models/post");
 const formidable = require("formidable");
 const fs = require("fs");
-const user = require("../models/user");
 
 exports.getPosts = (req, res) => {
    Post.find()
       .select("_id title body")
+      .populate("postedBy", "_id name")
       .then((posts) => {
          res.json(posts);
       })
