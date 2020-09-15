@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const User = require("../models/user");
 
 //show all users
@@ -19,6 +20,27 @@ exports.getUser = (req, res) => {
    req.profile.salt = undefined;
    req.profile.dashed_password = undefined;
    return res.json(req.profile);
+};
+
+//updated user profile
+exports.updateUser = (req, res) => {
+   let user = req.profile;
+   user = _.extend(user, req.body);
+   user.updated = Date.now();
+   //save
+   user.save((err) => {
+      if (err) {
+         res.status(401).json({
+            error: err,
+         });
+      }
+      user.salt = undefined;
+      user.dashed_password = undefined;
+      res.json({
+         message: "User updated successfully.",
+         user,
+      });
+   });
 };
 
 //create req.profile method
