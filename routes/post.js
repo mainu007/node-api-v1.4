@@ -7,6 +7,7 @@ const {
    postById,
    isPoster,
    updatePost,
+   deletePost,
 } = require("../controller/post");
 const { postValidator, validatorErrorHandler } = require("../validator");
 const { userById } = require("../controller/user");
@@ -14,6 +15,7 @@ const { userById } = require("../controller/user");
 const router = express.Router();
 //router
 router.get("/posts", requireSignin, getPosts);
+router.get("/posts/by/:userId", requireSignin, postsByUser);
 router.post(
    "/post/new/:userId",
    requireSignin,
@@ -22,7 +24,7 @@ router.post(
    validatorErrorHandler
 );
 router.put("/post/:postId", requireSignin, isPoster, updatePost);
-router.get("/posts/by/:userId", requireSignin, postsByUser);
+router.delete("/post/:postId", requireSignin, isPoster, deletePost);
 
 //any route containing :userId, our first execute userById()
 router.param("userId", userById);

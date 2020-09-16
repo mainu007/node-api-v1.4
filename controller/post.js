@@ -82,6 +82,22 @@ exports.updatePost = (req, res) => {
    });
 };
 
+//delete post
+exports.deletePost = (req, res) => {
+   const post = req.post;
+   post.remove((err) => {
+      if (err) {
+         return res.status(400).json({ error: err });
+      }
+      post.salt = undefined;
+      post.dashed_password = undefined;
+      res.json({
+         message: "Post deleted successfully!",
+         post,
+      });
+   });
+};
+
 //posts by user
 exports.postsByUser = (req, res) => {
    Post.find({ postedBy: req.profile._id })
