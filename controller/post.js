@@ -23,11 +23,14 @@ exports.getPosts = (req, res) => {
    Post.find()
       .select("_id title body")
       .populate("postedBy", "_id name")
-      .then((posts) => {
+      .sort("_created")
+      .exec((err, posts) => {
+         if (err) {
+            return res.status(400).json({
+               error: err,
+            });
+         }
          res.json(posts);
-      })
-      .catch((err) => {
-         res.status(400).json({ error: err });
       });
 };
 
@@ -102,8 +105,15 @@ exports.deletePost = (req, res) => {
 exports.postsByUser = (req, res) => {
    Post.find({ postedBy: req.profile._id })
       .populate("postedBy", "_id name")
-      .then((posts) => res.json(posts))
-      .catch((err) => res.status(400).json({ error: err }));
+      .sort("_created")
+      .exec((err, posts) => {
+         if (err) {
+            return res.status(400).json({
+               error: err,
+            });
+         }
+         res.json(posts);
+      });
 };
 
 //creating req.post object method
