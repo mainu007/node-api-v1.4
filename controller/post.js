@@ -2,6 +2,7 @@ const Post = require("../models/post");
 const formidable = require("formidable");
 const fs = require("fs");
 
+//get all post and posted user
 exports.getPosts = (req, res) => {
    Post.find()
       .select("_id title body")
@@ -46,4 +47,12 @@ exports.createPost = (req, res, next) => {
          res.json(result);
       });
    });
+};
+
+//posts by user
+exports.postsByUser = (req, res) => {
+   Post.find({ postedBy: req.profile._id })
+      .populate("postedBy", "_id name")
+      .then((posts) => res.json(posts))
+      .catch((err) => res.status(400).json({ error: err }));
 };

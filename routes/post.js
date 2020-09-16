@@ -1,6 +1,6 @@
 const express = require("express");
 const { requireSignin } = require("../controller/auth");
-const { getPosts, createPost } = require("../controller/post");
+const { getPosts, createPost, postsByUser } = require("../controller/post");
 const { postValidator, validatorErrorHandler } = require("../validator");
 const { userById } = require("../controller/user");
 
@@ -14,6 +14,7 @@ router.post(
    createPost,
    validatorErrorHandler
 );
+router.get("/posts/by/:userId", requireSignin, postsByUser);
 
 //any route containing :userId, our first execute userById()
 router.param("userId", userById);
