@@ -23,6 +23,16 @@ exports.postValidator = [
       .withMessage("Body must be between 4 to 2000 characters."),
 ];
 
+//password reset validator
+exports.passwordResetValidator = [
+   check("newPassword", "Password must be at least 6 characters long.")
+      .isLength({
+         min: 6,
+      })
+      .matches(/\d/)
+      .withMessage("Password must be a number"),
+];
+
 exports.validatorErrorHandler = (req, res, next) => {
    const errors = validationResult(req);
    const firstError = errors.array().map((error) => error.msg)[0];
